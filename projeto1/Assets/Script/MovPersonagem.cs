@@ -6,6 +6,9 @@ public class MovPersonagem : MonoBehaviour
 {
     private CharacterController controller;
     private Animator anim;
+    float horizontal;
+    float vertical;
+    private bool isAttack;
 
     [Header ("Config Player")]
     public float movimentSpeed = 3f;
@@ -24,8 +27,7 @@ public class MovPersonagem : MonoBehaviour
     void Update()
     {
         
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        Inputs();
 
         direction = new Vector3(horizontal, 0f, vertical).normalized;
     
@@ -45,6 +47,7 @@ public class MovPersonagem : MonoBehaviour
 
     }
 
+
     void UpdateAnimator()
     {
         anim.SetBool("isWalk" , isWalk);
@@ -55,5 +58,22 @@ public class MovPersonagem : MonoBehaviour
 
     }
 
+    void Attack()
+    {
+        isAttack = true;
+        anim.SetTrigger("Attack");
+    }
+
+    void Inputs()
+    {
+         
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+        if (Input.GetButtonDown ("Fire1"))
+        {
+            anim.SetTrigger("Attack");
+        }
+    }
 
 }
